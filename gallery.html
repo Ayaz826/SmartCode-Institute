@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCode_Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+</head>
+<body>
+    <div class="overlay"></div>
+    <header>
+        <a href="#" class="logo"><span>SmartCode Institute</span></a>
+        <ul class="navlist">
+           <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="#index.html#services">Services</a></li>
+                    <li><a href="#index.html#courses">Courses</a></li>
+                    <li><a href="#index.html#contact">Contact</a></li>
+        </ul>
+        <div class="right-header">
+            <a href="#" class="btn">Let's chat <i class='bx bx-message-dots' ></i></a>
+            <div class="menu-icon">
+                <div class="bar"></div>
+            </div>
+        </div>
+    </header>
+
+<!-- ========== Gallery Section Start ========== -->
+ <img src="/img/icons/coding1.png" class="img-fluid" alt="...">
+<section id="gallery" style="padding: 80px 20px; background-color: #f9f9f9; text-align: center;">
+    <h2 style="font-size: 32px; color: #333; margin-bottom: 30px;">Our Gallery</h2>
+
+    <div style="position: relative; width: 100%; max-width: 450px; margin: auto; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <img id="sliderImage" src=""
+             style="width: 100%; height: auto; display: block; transition: all 0.5s ease;">
+    </div>
+
+    <div style="margin-top: 5px;">
+        <button onclick="prevImage()" style="padding: 10px 20px; margin: 5px; border: none; background-color: #6283a9; color: white; border-radius: 5px; cursor: pointer;">Previous</button>
+        <button onclick="nextImage()" style="padding: 10px 20px; margin: 5px; border: none; background-color: #6283a9; color: white; border-radius: 5px; cursor: pointer;">Next</button>
+    </div>
+</section>
+<!-- ========== Gallery Section End ========== -->
+
+
+<footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-logo">
+                    <span>SmartCode</span> Institute
+                </h3>
+                <p class="footer-description">
+                    Empowering your future through technology with industry-relevant IT education and practical training.
+                </p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/smartcode_institute" target="_blank">
+                        <i class='bx bxl-instagram'></i>
+                    </a>
+                    <a href="https://youtube.com/@ayaz-0826" target="_blank">
+                        <i class='bx bxl-youtube'></i>
+                    </a>
+                    <a href="https://x.com/smartcode367" target="_blank">
+                        <i class='bx bxl-twitter'></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class='bx bxl-facebook'></i>
+                    </a>
+                </div>
+            </div>
+
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="#index.html#services">Services</a></li>
+                    <li><a href="#index.html#courses">Courses</a></li>
+                    <li><a href="#index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Our Courses</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html#services">Programming Languages</a></li>
+                    <li><a href="index.html#iservices">Web Development</a></li>
+                    <li><a href="index.html#services">Data Analysis</a></li>
+                    <li><a href="index.html#services">MS Office Suite</a></li>
+                    <li><a href="index.html#services">School IT Coaching</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul class="footer-contact">
+                    <li>
+                        <i class='bx bx-map'></i>
+                        <span>Dr MN Ghous Road, Raniganj, West Bengal</span>
+                    </li>
+                    <li>
+                        <i class='bx bx-phone'></i>
+                        <span>+91-7699905475, 9064728045</span>
+                    </li>
+                    <li>
+                        <i class='bx bx-envelope'></i>
+                        <span>smartcode367@gmail.com</span>
+                    </li>
+                    <li>
+                        <i class='bx bx-time'></i>
+                        <span>Mon-Sat: 9:00 AM - 6:00 PM</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to get latest updates</p>
+                <form class="footer-newsletter">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn">
+                        <i class='bx bx-send'></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 <span>SmartCode Institute</span>. All Rights Reserved. | Designed by <span>Ayaz Alam</span></p>
+        </div>
+    </footer>
+
+    <div id="progress">
+        <span id="progress-value">
+            <i class='bx bxs-chevrons-up' ></i>
+        </span>
+    </div>
+
+    <!-- scroll reveal  -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <!-- Swiper JS -->
+     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <!-- mixitup cdn js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"></script>
+    <script src="script.js"></script>
+
+<script>
+    var images = [
+        "https://lh3.googleusercontent.com/p/AF1QipNRjVFfDEqLioj-QcB2kdX81nsDDXNeeNs1qxw6=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/p/AF1QipMMPYkYES2CphQrb-16CXA7m1Bz6vxTpGySotOT=s1360-w1360-h1020-rw",
+        "https://lh3.googleusercontent.com/p/AF1QipPBOCZosoqYudvhyYaoajSdOn7t1SOeZpjOYc4P=s1360-w1360-h1020-rw"
+    ];
+    var currentIndex = 0;
+
+    function showImage(index) {
+        document.getElementById("sliderImage").src = images[index];
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+    }
+</script>
+
+</body>
+</html>

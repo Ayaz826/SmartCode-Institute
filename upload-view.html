@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload & View - SmartCode Institute</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        /* Additional styles for upload and view functionality */
+        .upload-view-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .upload-section, .gallery-section {
+            background: var(--gradient-white-bg2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: rgba(0,0,0,0.1)0px 1px 3px 0px;
+        }
+
+        .upload-section h2, .gallery-section h2 {
+            color: var(--main-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .file-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: rgba(0,0,0,0.1)0px 1px 3px 0px;
+            transition: transform 0.3s ease;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .file-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #ccc;
+        }
+
+        .file-info {
+            padding: 1rem;
+        }
+
+        .file-title {
+            font-weight: bold;
+            color: var(--main-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-description {
+            font-size: 0.9rem;
+            color: var(--font-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-meta {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .delete-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--main-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .upload-progress-bar {
+            height: 100%;
+            background: var(--gradient-color-bg);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .upload-status {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        .success-message {
+            color: #2ed573;
+        }
+
+        .error-message {
+            color: #ff4757;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo"><span>SmartCode</span> Institute</a>
+        <ul class="navlist">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#portfolio">Course</a></li>
+            <li><a href="upload-view.html" class="active">Upload & View</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </header>
+
+    <main class="upload-main">
+        <div class="upload-view-container">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <h2>Upload Photos & Videos</h2>
+                
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class='bx bx-cloud-upload' style="font-size: 3rem;"></i>
+                        </div>
+                        <h3>Drag & Drop Files Here</h3>
+                        <p>or <button type="button" class="browse-btn" onclick="document.getElementById('fileInput').click()">browse files</button></p>
+                        <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display: none;">
+                    </div>
+                    
+                    <div class="upload-options">
+                        <label for="uploadTitle">Title:</label>
+                        <input type="text" id="uploadTitle" placeholder="Enter a title for your upload" required>
+                        
+                        <label for="uploadDescription">Description:</label>
+                        <textarea id="uploadDescription" placeholder="Describe your photos/videos..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="upload-btn">
+                        <i class='bx bx-upload'></i> Upload Files
+                    </button>
+                    
+                    <div class="upload-progress" id="uploadProgress" style="display: none;">
+                        <div class="upload-progress-bar" id="uploadProgressBar"></div>
+                    </div>
+                    
+                    <div class="upload-status" id="uploadStatus"></div>
+                </form>
+            </section>
+
+            <!-- Gallery Section -->
+            <section class="gallery-section">
+                <h2>Uploaded Files Gallery</h2>
+                
+                <div id="galleryContainer">
+                    <div class="loading" id="loadingMessage">
+                        <i class='bx bx-loader-alt bx-spin'></i>
+                        <p>Loading uploaded files...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-logo"><span>SmartCode</span> Institute</h3>
+                <p class="footer-description">Empowering your future through technology...</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Upload and gallery functionality
+        const API_BASE = 'http://localhost:3000';
+        const uploadForm = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const uploadTitle = document.getElementById('uploadTitle');
+        const uploadDescription = document.getElementById('uploadDescription');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const uploadProgressBar = document.getElementById('uploadProgressBar');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const galleryContainer = document.getElementById('galleryContainer');
+        const loadingMessage = document.getElementById('loadingMessage');
+
+        // Handle file upload
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const files = fileInput.files;
+            if (files.length === 0) {
+                showStatus('Please select files to upload!', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append('files', files[i]);
+            }
+            formData.append('title', uploadTitle.value);
+            formData.append('description', uploadDescription.value);
+
+            // Show progress
+            uploadProgress.style.display = 'block';
+            uploadStatus.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Uploading...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus('Files uploaded successfully!', 'success');
+                    uploadForm.reset();
+                    uploadProgress.style.display = 'none';
+                    loadGallery(); // Refresh gallery
+                } else {
+                    showStatus(result.message || 'Upload failed!', 'error');
+                }
+            } catch (error) {
+                showStatus('Error uploading files: ' + error.message, 'error');
+            }
+            
+            uploadProgress.style.display = 'none';
+        });
+
+        // Load and display gallery
+        async function loadGallery() {
+            try {
+                const response = await fetch(`${API_BASE}/files`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayGallery(result.files);
+                }
+            } catch (error) {
+                galleryContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class='bx bx-error'></i>
+                        <p>Error loading files: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display files in gallery
+        function displayGallery(files) {
+            loadingMessage.style.display = 'none';
+            
+            if (files.length === 0) {
+                galleryContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class='bx bx-image'></i>
+                        <h3>No files uploaded yet</h3>
+                        <p>Upload your first photo or video to see it here!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const fileGrid = document.createElement('div');
+            fileGrid.className = 'file-grid';
+            
+            files.forEach(file => {
+                const fileCard = document.createElement('div');
+                fileCard.className = 'file-card';
+                
+                const isImage = file.fileType === 'image';
+                const previewElement = isImage ? 'img' : 'video';
+                const previewSrc = `${API_BASE}${file.url}`;
+                
+                fileCard.innerHTML = `
+                    <${previewElement} class="file-preview" ${isImage ? 'src' : 'src controls'}="${previewSrc}" alt="${file.title}">
+                        ${!isImage ? 'Your browser does not support the video tag.' : ''}
+                    </${previewElement}>
+                    <div class="file-info">
+                        <div class="file-title">${file.title}</div>
+                        <div class="file-description">${file.description}</div>
+                        <div class="file-meta">
+                            ${file.fileType.toUpperCase()} • ${formatFileSize(file.fileSize)} • ${new Date(file.uploadDate).toLocaleDateString()}
+                        </div>
+                        <button class="delete-btn" onclick="deleteFile(${file.id})">
+                            <i class='bx bx-trash'></i> Delete
+                        </button>
+                    </div>
+                `;
+                
+                fileGrid.appendChild(fileCard);
+            });
+            
+            galleryContainer.innerHTML = '';
+            galleryContainer.appendChild(fileGrid);
+        }
+
+        // Delete file
+        async function deleteFile(fileId) {
+            if (confirm('Are you sure you want to delete this file?')) {
+                try {
+                    const response = await fetch(`${API_BASE}/files/${fileId}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        loadGallery(); // Refresh gallery
+                        showStatus('File deleted successfully!', 'success');
+                    } else {
+                        showStatus('Error deleting file!', 'error');
+                    }
+                } catch (error) {
+                    showStatus('Error deleting file: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // Utility functions
+        function showStatus(message, type) {
+            uploadStatus.innerHTML = message;
+            uploadStatus.className = `upload-status ${type}-message`;
+            setTimeout(() => {
+                uploadStatus.innerHTML = '';
+                uploadStatus.className = 'upload-status';
+            }, 3000);
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Drag and drop functionality
+        const uploadArea = document.getElementById('uploadArea');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            fileInput.files = files;
+        });
+
+        // Load gallery on page load
+        loadGallery();
+    </script>
+</body>
+</html>
